@@ -2,19 +2,13 @@
 
 ##########################################################################
 #   Description:
-#       Fetch Yeast sample data and create symlinks with descriptive names
+#       Give raw files meaningful names that are easy to manage
+#       in the scripts that follow
 ##########################################################################
 
 ##########################################################################
 #   Main
 ##########################################################################
-
-# Make sure user specifies how many replicates to download
-if [ $# != 1 ]; then
-    printf "Usage: $0 replicates\n" >> /dev/stderr
-    exit 1
-fi
-replicates=$1
 
 # Document software versions used for publication
 uname -a
@@ -22,8 +16,11 @@ fasterq-dump --version
 pwd
 
 raw=Results/01-fetch/Raw
-raw_renamed=Results/01-fetch/Raw-renamed
+raw_renamed=Results/02-readable-names
 mkdir -p $raw_renamed
+
+# There are 2 raw files for each replicate
+replicates=$(($(ls $raw | wc -l) / 2))
 
 # Link raw files to WT-rep or SNF-rep to indicate the biological condition
 # Link raw files to condX-repYY for easy and consistent scripting

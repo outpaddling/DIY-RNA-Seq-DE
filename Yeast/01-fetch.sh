@@ -15,13 +15,17 @@ if [ $# != 1 ]; then
     exit 1
 fi
 replicates=$1
+if [ $replicates -lt 3 ] || [ $replicates -gt 48 ]; then
+    printf "$0: Replicates cannot be less than 3 or greater than 48.\n" >> /dev/stderr
+    exit 1
+fi
 
 # Document software versions used for publication
 uname -a
 fasterq-dump --version
 pwd
 
-raw=Results/01-fetch/Raw
+raw=Results/01-fetch
 mkdir -p $raw
 
 tech_rep=1  # Fixed, could be 1 through 7

@@ -48,8 +48,8 @@ for condition in WT SNF2; do
 	sample_num_padded=$(printf "%02d" $sample_num)
 	# Use soft/symbolic links (ln -s) in case raw files are on a different
 	# disk/partition.  Hard links won't work in that case.
-	(cd $raw_renamed && ln -fs ../Raw/$fq $condition-$biorep_padded.fastq.zst)
-	(cd $raw_renamed && ln -fs ../Raw/$fq sample$sample_num_padded-cond$cond_num-rep$biorep_padded.fastq.zst)
+	(cd $raw_renamed && ln -fs ../01-fetch/$fq $condition-$biorep_padded.fastq.zst)
+	(cd $raw_renamed && ln -fs ../01-fetch/$fq sample$sample_num_padded-cond$cond_num-rep$biorep_padded.fastq.zst)
 	sample_num=$(($sample_num + 1))
     done
     rm -f $condition.tsv

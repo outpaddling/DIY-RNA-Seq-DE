@@ -55,4 +55,5 @@ for condition in WT SNF2; do
     done
     rm -f $condition.tsv
 done
+wait
 ls -l $raw

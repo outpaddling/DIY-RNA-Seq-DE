@@ -1,0 +1,40 @@
+#!/bin/sh -e
+
+##########################################################################
+#   Description:
+#       Take a list of integer PHRED scores as arguments, and for each
+#       one, output the PHRED character and probability of read error
+#       
+#   History:
+#   Date        Name        Modification
+#   2022-01-12  Jason Bacon Begin
+##########################################################################
+
+usage()
+{
+    printf "Usage: $0 score [score ...]\n"
+    exit 1
+}
+
+
+##########################################################################
+#   Main
+##########################################################################
+
+if [ $# -lt 1 ]; then
+    usage
+fi
+
+printf "\nPHRED string:\n"
+for score in $*; do
+    printf "%b" $(printf '\\%03o' $((score + 33)))
+done
+printf "\n\n"
+
+printf "Chr\tASCII\tQUAL\tP(error)\n"
+for score in $*; do
+    ascii=$((score + 33))
+    chr=$(printf '\\%03o' $ascii)
+    p=`printf "p(10,-($score / 10))\nquit\n" | bc -l`
+    printf "%b\t%u\t%u\t%s\n" $chr $ascii $score $p
+done

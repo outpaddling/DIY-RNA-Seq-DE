@@ -1,0 +1,40 @@
+#!/bin/sh -e
+
+##########################################################################
+#   Script description:
+#       Take a string argument representing PHRED scores and for each
+#       character, output the integer score and probability of read error
+#       
+#   History:
+#   Date        Name        Modification
+#   2021-06-18  Jason Bacon Begin
+##########################################################################
+
+usage()
+{
+    printf "Usage: $0 string\n"
+    exit 1
+}
+
+
+##########################################################################
+#   Main
+##########################################################################
+
+if [ $# != 1 ]; then
+    usage
+fi
+string=$1
+export LC_TYPE=C
+
+len=$(echo $string | wc -c)
+c=1
+printf "Chr\tASCII\tQUAL\tP(error)\n"
+while [ $c -lt $len ]; do
+    chr=$(echo $string | cut -c $c)
+    ascii=$(printf '%d' "'$chr")
+    score=$((ascii - 33))
+    p=`printf "p(10,-($score / 10))\nquit\n" | bc -l`
+    printf "%c\t%u\t%u\t%s\n" $chr $ascii $score $p
+    c=$((c + 1))
+done

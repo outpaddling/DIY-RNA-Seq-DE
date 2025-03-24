@@ -25,7 +25,7 @@ pwd
 # Find out how many processors this machine has available
 processors=$(getconf _NPROCESSORS_ONLN)
 
-mkdir Results/03-qc-raw
+mkdir -p Results/03-qc-raw
 printf "Running fastqc on each of the following:\n"
 find Results/02-readable-names -name 'sample*'
 

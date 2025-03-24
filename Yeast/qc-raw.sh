@@ -27,4 +27,5 @@ fastq=$1
 output_dir=Results/03-qc-raw
 base=$(basename $fastq)     # Get filename without directory path
 stem=${base%.fastq.*}       # Get filename with .fastq.* removed
-zstdcat $fastq | fastqc -o $output_dir stdin:$stem
+zstdcat $fastq | fastqc -o $output_dir stdin:$stem \
+    > $output_dir/$stem.stdout 2> $output_dir/$stem.stderr

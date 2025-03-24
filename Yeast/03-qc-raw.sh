@@ -25,14 +25,17 @@ pwd
 # Find out how many processors this machine has available
 processors=$(getconf _NPROCESSORS_ONLN)
 
-mkdir -p Results/03-qc-raw
+output_dir=Results/03-qc-raw
+mkdir -p $output_dir
 printf "Running fastqc on each of the following:\n"
-find Results/02-readable-names -name 'sample*'
+find Results/02-readable-names -name 'sample*.fastq.zst'
 
 # xargs will run ./qc-raw.sh once for each file output by find.
 # It will run up to "$processors" processes at the same time.
 # You can also use GNU parallel in place of xargs, if you have it.
 # xargs is a standard Unix tool that does what we need here.
 # GNU parallel is much more sophisticated, overkill for out purposes.
-find Results/02-readable-names -name 'sample*' \
+find Results/02-readable-names -name 'sample*.fastq.zst' \
     | xargs -n 1 -P $processors ./qc-raw.sh
+
+cat $output_dir/*.std* | more

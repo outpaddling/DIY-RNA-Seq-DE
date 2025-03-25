@@ -25,17 +25,20 @@ pwd
 # Find out how many processors this machine has available
 processors=$(getconf _NPROCESSORS_ONLN)
 
-mkdir -p Results/04-trim
+input_dir=Results/02-readable-names
+output_dir=Results/05-trim
+mkdir -p $output_dir
 printf "Running fast-trim on each of the following:\n"
-find Results/02-readable-names -name 'sample*'
+find $input_dir -name 'sample*'
+printf "Please wait...\n"
 
 # xargs will run ./qc-raw.sh once for each file output by find.
 # It will run up to "$processors" processes at the same time.
 # You can also use GNU parallel in place of xargs, if you have it.
 # xargs is a standard Unix tool that does what we need here.
 # GNU parallel is much more sophisticated, overkill for out purposes.
-find Results/02-readable-names -name 'sample*' \
+find $input_dir -name 'sample*' \
     | xargs -n 1 -P $processors ./trim.sh
 
 # View terminal output that was redirected to files by ./trim.sh
-cat Results/04-trim/*.std* | more
+cat $output_dir/*.std* | more

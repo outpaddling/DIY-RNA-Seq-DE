@@ -24,9 +24,9 @@ if [ $# != 1 ]; then
 fi
 raw=$1
 
-output_dir=Results/04-trim
+output_dir=Results/05-trim
 base=$(basename $raw)
-trimmed=Results/04-trim/${base%.fastq.zst}-trimmed.fastq.zst
+trimmed=$output_dir/${base%.fastq.zst}-trimmed.fastq.zst
 # Redirect output to individual files so it doesn't get mixed up
 # when multiple instances of this script are run in parallel
 stdout=${trimmed%.fastq.zst}.stdout

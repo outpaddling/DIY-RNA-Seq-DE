@@ -25,10 +25,8 @@ pwd
 # Find out how many processors this machine has available
 processors=$(getconf _NPROCESSORS_ONLN)
 
-# Use variables to make the code self-documenting and easy to change
-input_dir=Results/02-readable-names
-output_dir=Results/03-qc-raw
-
+input_dir=Results/05-trim
+output_dir=Results/06-qc-trimmed
 mkdir -p $output_dir
 printf "Running fastqc on each of the following:\n"
 find $input_dir -name 'sample*.fastq.zst'
@@ -40,6 +38,6 @@ printf "Please wait...\n"
 # xargs is a standard Unix tool that does what we need here.
 # GNU parallel is much more sophisticated, overkill for out purposes.
 find $input_dir -name 'sample*.fastq.zst' \
-    | xargs -n 1 -P $processors ./qc-raw.sh
+    | xargs -n 1 -P $processors ./qc-trimmed.sh
 
 cat $output_dir/*.std* | more

@@ -2,6 +2,7 @@
 
 ##########################################################################
 #   Script description:
+#       Run kallisto quant on each trimmed FASTQ file
 ##########################################################################
 
 # Document software versions used for publication
@@ -16,6 +17,8 @@ input_dir=Results/05-trim
 index_dir=Results/09-kallisto-index
 output_dir=Results/10-kallisto-quant
 
+# Don't bother with xargs here to run multiple jobs at once.
+# Instead, just loop through the files and use all available cores for one job.
 for fastq in $input_dir/*.fastq.zst; do
     printf "===\nProcessing $fastq...\n===\n\n"
     base=$(basename $fastq)     # Get filename without directory path

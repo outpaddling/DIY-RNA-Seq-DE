@@ -18,6 +18,7 @@ pwd
 raw=Results/01-fetch
 raw_renamed=Results/02-readable-names
 mkdir -p $raw_renamed
+rm -f $raw_renamed/*
 
 # There are 2 raw files for each replicate
 replicates=$(($(ls $raw | wc -l) / 2))

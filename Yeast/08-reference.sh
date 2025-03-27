@@ -126,6 +126,10 @@ for chrom in II III IV V VI VII VIII IX X XI XII XIII XIV XV XVI; do
     $zcat $file | egrep -v '^##[a-z]|^#!' | blt deromanize 1 >> $gff
 done
 
+# Build transcriptome from GFF and genome
+gffread -w ${transcriptome%.fa}-from-gff.fa -g $genome $gff
+samtools faidx ${transcriptome%.fa}-from-gff.fa
+
 # Kallisto requires a list of chromosome sizes.  Use the biolibc-tools
 # chrom-lens command to generate this from the genome reference.
 chrom_lengths="chromosome-sizes.tsv"

@@ -37,7 +37,7 @@ for condition in WT SNF2; do
     # Col 3 is SNF2 mutant or WT
     # Col 4 is biological replicate
     awk -v replicates=$replicates -v condition=$condition -v tech_rep=$tech_rep \
-	'$2 == tech_rep && $3 == condition && $4 <= replicates' \
+	'$2 == tech_rep && $3 == condition && $4 > 6 && $4 <= replicates + 6' \
 	$map > $condition.tsv
     printf "$condition:\n"
 
@@ -54,7 +54,7 @@ for condition in WT SNF2; do
 	    zstd -f --rm $raw/$sample.fastq &
 	fi
     done
-    rm -f $condition.tsv
+    # rm -f $condition.tsv
 done
 wait
 ls -l $raw

@@ -21,10 +21,11 @@ for condition in 1 2; do
     norm_file=cond$condition-all-norm-$replicates.tsv
     printf "Normalizing condition $condition: $replicates replicates\n"
     files=""
-    for r in $(seq 1 $replicates); do
-	r2=$(printf "%02d" $r)
-	files="$files ../../$input_dir/sample*cond$condition-rep$r2*/abundance.tsv"
+    all_reps=$(ls ../../$input_dir | cut -d - -f3 | cut -c 4-5 | sort | uniq)
+    for r in $all_reps; do
+	files="$files ../../$input_dir/sample*cond$condition-rep$r*/abundance.tsv"
     done
+    printf "files = $files\n"
     echo "time fasda normalize --output $norm_file $files"
     time fasda normalize --output $norm_file $files
     printf "\nCondition $condition normalized counts:\n\n"

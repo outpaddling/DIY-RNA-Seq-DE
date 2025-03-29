@@ -10,7 +10,7 @@ pwd
 
 printf "Computing fold-changes...\n"
 set -x
-fasda fold-change --output fc.txt cond1-all-norm.tsv cond2-all-norm.tsv
+fasda fold-change --output fc.txt cond1-norm.tsv cond2-norm.tsv
 set +x
 
 pwd

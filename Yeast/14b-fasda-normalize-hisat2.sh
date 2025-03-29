@@ -10,7 +10,7 @@ pwd
 
 # FIXME: Factor out to fasda-mw.sh?
 for condition in 1 2; do
-    norm_file=cond$condition-all-norm.tsv
+    norm_file=cond$condition-norm.tsv
     printf "Normalizing condition $condition: $replicates replicates\n"
     files=""
     files=$(ls *-cond$condition-*-abundance.tsv)

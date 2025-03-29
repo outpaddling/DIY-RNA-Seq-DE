@@ -12,7 +12,6 @@
 
 # Document software versions used for publication
 uname -a
-fasterq-dump --version
 pwd
 
 raw=Results/01-fetch

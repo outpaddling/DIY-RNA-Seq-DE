@@ -23,8 +23,6 @@ ln -f $reference_dir/$genome.fai $output_dir
 genome=$output_dir/$genome
 printf "Using reference $genome...\n"
 
-if [ ! -e $genome.8.ht2 ]; then
-    printf "Building $genome.*.ht2...\n"
-    hisat2-build $genome $genome
-fi
+printf "Building $genome.*.ht2...\n"
+hisat2-build $genome $genome
 ls -l $output_dir

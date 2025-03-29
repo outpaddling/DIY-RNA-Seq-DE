@@ -13,8 +13,6 @@ set -x
 fasda fold-change --output fc.txt cond1-norm.tsv cond2-norm.tsv
 set +x
 
-pwd
-ls
 more fc.txt
 printf "\n%-25s %10s %10s\n" "File" "Features" "P < 0.05"
 printf "%-25s %10s %10s\n" fc.txt: \

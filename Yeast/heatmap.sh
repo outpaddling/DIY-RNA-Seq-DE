@@ -50,7 +50,7 @@ fasda filter --max-p-val 0.05 Results/11-fasda-kallisto/fc-3-replicates.txt \
 
 # Concatenate corresponding lines from the normalized counts files
 # and remove the 2nd occurrence of the feature name
-counts=counts.csv
+counts=counts.tsv
 rm -f $counts
 paste Results/11-fasda-kallisto/cond1-norm-3.tsv \
     Results/11-fasda-kallisto/cond2-norm-3.tsv \
@@ -58,6 +58,6 @@ paste Results/11-fasda-kallisto/cond1-norm-3.tsv \
     > $counts
 
 # Load the counts into gnuplot and draw a heatmap
-head $counts > small.tsv
+head $counts | cut -f 2-7 > small.tsv
 cat small.tsv
 gnuplot --persist heatmap.gnuplot

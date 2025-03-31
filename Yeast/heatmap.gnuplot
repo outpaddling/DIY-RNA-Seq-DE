@@ -4,18 +4,19 @@
 # Various ways to create a 2D heat map from ascii data
 #
 
-set title "Heat Map generated from a file containing Z values only"
+set title "Read counts"
 unset key
 set tic scale 0
 
 # Color runs from white to green
-set palette rgbformula -7,2,-7
-set cbrange [0:5]
-set cblabel "Score"
+# set palette rgbformula -7,2,-7
+set palette rgbformula 2,-7,-7
+set cbrange [0:500]
+set cblabel "Counts"
 unset cbtics
 
-set xrange [-0.5:4.5]
-set yrange [-0.5:4.5]
+set xrange [-0.5:5.5]
+set yrange [-0.5:9.5]
 
 $map1 << EOD
 5 4 3 1 0

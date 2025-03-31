@@ -57,7 +57,10 @@ paste Results/11-fasda-kallisto/cond1-norm-3.tsv \
     | awk '{ printf("%s\t%s\t%s\t%s\t%s\t%s\t%s\n", $1, $2, $3, $4, $6, $7, $8, $9); }' \
     > $counts
 
-# Load the counts into gnuplot and draw a heatmap
+# Generate example small file
+# To-do: Convert normalized counts to z-scores for realistic color comparison
 head $counts | cut -f 2-7 > small.tsv
 cat small.tsv
+
+# Load the counts into gnuplot and draw a heatmap
 gnuplot --persist heatmap.gnuplot

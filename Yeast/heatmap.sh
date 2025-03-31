@@ -58,7 +58,8 @@ paste Results/11-fasda-kallisto/cond1-norm-3.tsv \
     > $counts
 
 # Generate example small file
-# To-do: Convert normalized counts to z-scores for realistic color comparison
+# To-do: Convert counts to z-scores for realistic color comparison across
+# features with different expression levels
 head $counts | cut -f 2-7 > small.tsv
 cat small.tsv
 

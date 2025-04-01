@@ -56,12 +56,16 @@ paste Results/11-fasda-kallisto/cond1-norm-3.tsv \
     Results/11-fasda-kallisto/cond2-norm-3.tsv \
     | awk '{ printf("%s\t%s\t%s\t%s\t%s\t%s\t%s\n", $1, $2, $3, $4, $6, $7, $8, $9); }' \
     > $counts
+head $counts
 
 # Generate example small file
 # To-do: Convert counts to z-scores for realistic color comparison across
 # features with different expression levels
-head $counts | cut -f 2-7 > small.tsv
+printf "Transcript\tc1r1\tc1r2\tc1r3\tc2r1\tc2r2\tc2r3\n" > small.tsv
+head $counts >> small.tsv
 cat small.tsv
 
 # Load the counts into gnuplot and draw a heatmap
-gnuplot --persist heatmap.gnuplot
+# gnuplot --persist heatmap.gnuplot
+
+./heatmap-seaborn.py

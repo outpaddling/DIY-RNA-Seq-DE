@@ -8,9 +8,10 @@ uname -a
 fasda --version
 pwd
 
+export PATH=~/Prog/Src/local/bin:$PATH
 printf "Computing fold-changes...\n"
 set -x
-fasda fold-change --output fc.txt cond1-norm.tsv cond2-norm.tsv
+fasda fold-change --debug --output fc.txt cond1-norm.tsv cond2-norm.tsv
 set +x
 
 more fc.txt

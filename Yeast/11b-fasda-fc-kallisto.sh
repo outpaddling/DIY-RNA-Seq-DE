@@ -17,6 +17,18 @@ output_dir=Results/11-fasda-kallisto
 mkdir -p $output_dir
 cd $output_dir
 
+# Separate counts by condition for fasda fold-change
+norm_all=all-norm.tsv
+printf "\nCondition 1 normalized counts:\n"
+norm_file1=cond1-norm-$replicates.tsv
+cut -f 1-4 $norm_all > $norm_file1
+head -n 5 $norm_file1
+
+printf "\nCondition 2 normalized counts:\n"
+norm_file2=cond2-norm-$replicates.tsv
+cut -f 1,5-7 $norm_all > $norm_file2
+head -n 5 $norm_file2
+
 de_file=fc-$replicates-replicates.txt
 printf "\nComputing fold-change for $replicates replicates...\n"
 echo "time fasda fold-change --output $de_file cond1-norm-$replicates.tsv cond2-norm-$replicates.tsv"

@@ -8,8 +8,20 @@ uname -a
 fasda --version
 pwd
 
+# Separate counts by condition for fasda fold-change
+norm_all=all-norm.tsv
+printf "\nCondition 1 normalized counts:\n"
+norm_file1=cond1-norm.tsv
+cut -f 1-4 $norm_all > $norm_file1
+head -n 5 $norm_file1
+
+printf "\nCondition 2 normalized counts:\n"
+norm_file2=cond2-norm.tsv
+cut -f 1,5-7 $norm_all > $norm_file2
+head -n 5 $norm_file2
+
 outfile=fc-3-replicates.txt
-export PATH=~/Prog/Src/local/bin:$PATH
+# export PATH=~/Prog/Src/local/bin:$PATH
 printf "Computing fold-changes...\n"
 set -x
 fasda fold-change --output $outfile cond1-norm.tsv cond2-norm.tsv

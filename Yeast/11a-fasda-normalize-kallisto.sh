@@ -17,23 +17,10 @@ output_dir=Results/11-fasda-kallisto
 mkdir -p $output_dir
 cd $output_dir
 
-files=""
-all_samples=$(ls ../../$input_dir | cut -d - -f1 | cut -c 7-8 | sort | uniq)
-echo $all_samples
-for s in $all_samples; do
-    files="$files ../../$input_dir/sample$s-*/abundance.tsv"
-done
-ls $files | cat
+files=$(ls ../../$input_dir/sample*-*/abundance.tsv)
 norm_all=all-norm.tsv
 echo "fasda normalize --output $norm_all $files"
 time fasda normalize --output $norm_all $files
+printf "\nAll samples normalized counts:\n\n"
+head -n 5 $norm_all
 
-printf "\nCondition 1 normalized counts:\n"
-norm_file1=cond1-norm-$replicates.tsv
-cut -f 1-4 $norm_all > $norm_file1
-head $norm_file1
-
-printf "\nCondition 2 normalized counts:\n"
-norm_file2=cond2-norm-$replicates.tsv
-cut -f 1,5-7 $norm_all > $norm_file2
-head $norm_file2

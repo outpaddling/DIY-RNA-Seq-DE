@@ -9,15 +9,12 @@ fasda --version
 pwd
 
 # FIXME: Factor out to fasda-mw.sh?
-for condition in 1 2; do
-    norm_file=cond$condition-norm.tsv
-    printf "Normalizing condition $condition: $replicates replicates\n"
-    files=""
-    files=$(ls *-cond$condition-*-abundance.tsv)
-    printf "%s\n" $files
-    set -x
-    fasda normalize --output $norm_file $files
-    set +x
-    printf "\nCondition $condition normalized counts:\n\n"
-    head $norm_file
-done
+norm_all=all-norm.tsv
+printf "Normalizing all samples\n"
+files=$(ls *-abundance.tsv)
+
+set -x
+fasda normalize --output $norm_all $files
+set +x
+printf "\nAll samples normalized counts:\n"
+head -n 5 $norm_all

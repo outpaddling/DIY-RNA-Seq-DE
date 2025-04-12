@@ -17,16 +17,23 @@ output_dir=Results/11-fasda-kallisto
 mkdir -p $output_dir
 cd $output_dir
 
-for condition in 1 2; do
-    norm_file=cond$condition-norm-$replicates.tsv
-    printf "\nNormalizing condition $condition: $replicates replicates\n"
-    files=""
-    all_reps=$(ls ../../$input_dir | cut -d - -f3 | cut -c 4-5 | sort | uniq)
-    for r in $all_reps; do
-	files="$files ../../$input_dir/sample*cond$condition-rep$r*/abundance.tsv"
-    done
-    echo "fasda normalize --output $norm_file $files"
-    time fasda normalize --output $norm_file $files
-    printf "\nCondition $condition normalized counts:\n\n"
-    head $norm_file
+files=""
+all_samples=$(ls ../../$input_dir | cut -d - -f1 | cut -c 7-8 | sort | uniq)
+echo $all_samples
+for s in $all_samples; do
+    files="$files ../../$input_dir/sample$s-*/abundance.tsv"
 done
+ls $files | cat
+norm_all=all-norm.tsv
+echo "fasda normalize --output $norm_all $files"
+time fasda normalize --output $norm_all $files
+
+printf "\nCondition 1 normalized counts:\n"
+norm_file1=cond1-norm-$replicates.tsv
+cut -f 1-4 $norm_all > $norm_file1
+head $norm_file1
+
+printf "\nCondition 2 normalized counts:\n"
+norm_file2=cond2-norm-$replicates.tsv
+cut -f 1,5-7 $norm_all > $norm_file2
+head $norm_file2

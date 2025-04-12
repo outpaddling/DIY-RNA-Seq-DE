@@ -58,6 +58,9 @@ cd $raw_renamed
 for cond in WT SNF2; do
     biorep=1
     for file in $cond-*.zst; do
+	# Zero-pad samples 1 through 9 to 01 through 09 so "ls" output
+	# is numerically sorted.  Otherwise, it will sort lexically
+	# as 1, 10, 11, ..., 2, 3, ...
 	sample_num_padded=$(printf "%02d" $sample_num)
 	biorep_padded=$(printf "%02d" $biorep)
 	printf "Linking $file = sample$sample_num_padded-cond$cond_num-rep$biorep_padded.fastq.zst\n"

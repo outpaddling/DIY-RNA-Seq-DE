@@ -29,7 +29,7 @@ norm_file2=cond2-norm-$replicates.tsv
 cut -f 1,5-7 $norm_all > $norm_file2
 head -n 5 $norm_file2
 
-de_file=fc-$replicates-replicates.txt
+de_file=fc-$replicates.txt
 printf "\nComputing fold-change for $replicates replicates...\n"
 echo "time fasda fold-change --output $de_file cond1-norm-$replicates.tsv cond2-norm-$replicates.tsv"
 time fasda fold-change \

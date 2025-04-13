@@ -57,6 +57,7 @@ for reps in $(seq $min_reps $max_reps); do
     ./02-readable-names.sh
     ./05-trim.sh
     ./10-kallisto-quant.sh
-    ./11-fasda-kallisto.sh
+    ./11a-fasda-normalize-kallisto.sh
+    ./11b-fasda-fc-kallisto.sh
     pause
 done

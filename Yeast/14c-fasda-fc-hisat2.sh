@@ -20,7 +20,7 @@ norm_file2=cond2-norm.tsv
 cut -f 1,5-7 $norm_all > $norm_file2
 head -n 5 $norm_file2
 
-outfile=fc-3-replicates.txt
+outfile=fc-3.txt
 # export PATH=~/Prog/Src/local/bin:$PATH
 printf "Computing fold-changes...\n"
 set -x

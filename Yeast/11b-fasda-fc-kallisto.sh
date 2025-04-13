@@ -20,7 +20,7 @@ cd $output_dir
 # Separate counts by condition for fasda fold-change
 norm_all=all-norm.tsv
 cols=$(awk 'NR == 1 { print NF }' $norm_all)
-last_c1_col=$(($cols / 2))
+last_c1_col=$(($cols / 2 + 1))
 first_c2_col=$(($last_c1_col + 1))
 echo $cols $last_c1_col $first_c2_col
 

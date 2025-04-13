@@ -11,7 +11,7 @@
 
 # Generate a list of features of interest by filtering the FASDA fold-changes
 features=filtered-features.txt
-fasda filter --max-p-val 0.05 Results/11-fasda-kallisto/fc-3-replicates.txt \
+fasda filter --max-p-val 0.05 Results/11-fasda-kallisto/fc-3.txt \
     | awk '{ print $1 }' | head -n 30 > $features
 wc -l $features
 

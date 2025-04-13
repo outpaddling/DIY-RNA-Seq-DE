@@ -19,14 +19,19 @@ cd $output_dir
 
 # Separate counts by condition for fasda fold-change
 norm_all=all-norm.tsv
+cols=$(awk 'NR == 1 { print NF }' $norm_all)
+last_c1_col=$(($cols / 2))
+first_c2_col=$(($last_c1_col + 1))
+echo $cols $last_c1_col $first_c2_col
+
 printf "\nCondition 1 normalized counts:\n"
 norm_file1=cond1-norm-$replicates.tsv
-cut -f 1-4 $norm_all > $norm_file1
+cut -f 1-$last_c1_col $norm_all > $norm_file1
 head -n 5 $norm_file1
 
 printf "\nCondition 2 normalized counts:\n"
 norm_file2=cond2-norm-$replicates.tsv
-cut -f 1,5-7 $norm_all > $norm_file2
+cut -f 1,$first_c2_col-$cols $norm_all > $norm_file2
 head -n 5 $norm_file2
 
 de_file=fc-$replicates.txt

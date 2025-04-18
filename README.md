@@ -1,2 +1,2 @@
-# rna-seq-for-biologists
-Free tools and examples for RNA-Seq Differential Expression Analysis for Biologists
+# DIY-RNA-Seq-DE
+Free tools and examples for the book DIY RNA-Seq Differential Expression Analysis

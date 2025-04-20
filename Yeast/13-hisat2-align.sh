@@ -16,6 +16,7 @@ pwd
 build=$(Reference/genome-build.sh)
 release=$(Reference/genome-release.sh)
 genome=$(Reference/genome-filename.sh)
+index=${genome%.fa}
 
 input_dir=Results/05-trim
 output_dir=Results/13-hisat2-align
@@ -43,7 +44,7 @@ for fastq in ../../$input_dir/sample*-cond*-rep*.fastq.zst; do
     sample=${gzb%.fastq.gz}
     printf "Running hisat2 $gzb -> $bam...\n"
     set -x
-    hisat2 --threads $processors -x ../../$index_dir/$genome -U $gzb \
+    hisat2 --threads $processors -x ../../$index_dir/$index -U $gzb \
 	| samtools sort > $bam
     set +x
     

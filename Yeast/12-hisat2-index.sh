@@ -24,5 +24,6 @@ genome=$output_dir/$genome
 printf "Using reference $genome...\n"
 
 printf "Building $genome.*.ht2...\n"
-hisat2-build $genome $genome
+# Use the same name as the genome FASTA, minus ".fa"
+hisat2-build $genome ${genome%.fa}
 ls -l $output_dir

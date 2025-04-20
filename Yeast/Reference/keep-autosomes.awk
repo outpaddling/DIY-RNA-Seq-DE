@@ -1,6 +1,6 @@
 #############################################################################
 #   Description:
-#       Remove non-autosomal info from mouse cDNA fasta file
+#       Remove non-autosomal info from yeast cDNA fasta file
 #
 #   History: 
 #   Date        Name        Modification
@@ -11,10 +11,13 @@ BEGIN {
     FS=":";
 }
 {
-    # As long as the description line does not indicate a numeric chromosome,
-    # discard it and everything to the next sequence line.
+    # Remove all features in the mitochondria chromosome
+    # The fields are separated by ':' and the 3rd is the chromosome name,
+    # which is "Mito" for mitochondria
+    # >YPL071C_mRNA cdna chromosome:R64-1-1:XVI:420048:420518:...
     while ( ($0 ~ "^>") && ($3 == "Mito") )
     {
+	# Remove all sequence data until the next feature
 	do
 	{
 	    status=getline

@@ -104,6 +104,7 @@ fi
 # >I dna:chromosome chromosome:R64-1-1:I:1:230218:1 REF
 # keep-autosomes.awk removes lines with "Mito:" in the 3rd field
 $zcat $cdna | $awk -F : -f ../../Reference/keep-autosomes.awk > $transcriptome
+samtools faidx $transcriptome
 
 site=http://ftp.ensembl.org/pub/release-$release/gff3/saccharomyces_cerevisiae
 

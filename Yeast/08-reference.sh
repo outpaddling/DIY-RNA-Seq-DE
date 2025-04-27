@@ -131,7 +131,8 @@ done
 gffread -w ${transcriptome%.fa}-from-gff.fa -g $genome $gff
 samtools faidx ${transcriptome%.fa}-from-gff.fa
 
-# Kallisto requires a list of chromosome sizes.  Use the biolibc-tools
+# Kallisto requires a list of chromosome sizes when using --genomebam
+# in order to produce a proper SAM header.  Use the biolibc-tools
 # chrom-lens command to generate this from the genome reference.
 chrom_lengths="chromosome-sizes.tsv"
 printf "Generating $chrom_lengths...\n"

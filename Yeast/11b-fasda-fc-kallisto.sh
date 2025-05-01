@@ -41,7 +41,9 @@ time fasda fold-change \
      --output $de_file \
     cond1-norm-$replicates.tsv cond2-norm-$replicates.tsv
 
-more $de_file
+head -n 6 $de_file
+printf '\n'
+tail -n 5 $de_file
 printf "\n%-25s %10s %10s\n" "File" "Features" "P < 0.05"
 printf "%-25s %10s %10s\n" $de_file: \
 	$(cat $de_file | wc -l) $(awk '$8 < 0.05' $de_file | wc -l)

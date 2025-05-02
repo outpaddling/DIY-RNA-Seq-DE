@@ -31,7 +31,7 @@ library(tibble)
 
 # row.names=1 removes "target_id" label from col 1, so it is not
 # counted as a data column.
-raw_counts = read.delim("counts.tsv", row.names=1, header=TRUE)
+raw_counts = read.delim("kallisto-counts.tsv", row.names=1, header=TRUE)
 print("Raw counts:")
 head(raw_counts)
 cols = ncol(raw_counts)
@@ -78,7 +78,7 @@ dds = estimateSizeFactors(dds)
 scaling_factors = sizeFactors(dds)
 scaling_factors
 normalized_deseq2 = counts(dds, normalized = TRUE)
-write.table(normalized_deseq2, file='deseq2-normalized-counts.tsv',
+write.table(normalized_deseq2, file='kallisto-deseq2-normalized-counts.tsv',
 	    sep = '\t', quote=F, col.names = NA)
 
 # Since we had to round the counts to integers to let DESeq2 use them,
@@ -92,5 +92,5 @@ tail(normalized_deseq2)
 dds = DESeq(dds)
 results = results(dds)
 results
-write.table(results, file='deseq2-results.tsv', sep='\t', quote=F,
+write.table(results, file='kallisto-deseq2-results.tsv', sep='\t', quote=F,
 	    col.names=NA)

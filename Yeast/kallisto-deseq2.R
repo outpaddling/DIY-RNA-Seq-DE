@@ -53,7 +53,10 @@ raw_counts = round(raw_counts)
 # represent each condition.
 sample_names = c(colnames(raw_counts))
 # Must be called "condition" for DESeqDataSetFromMatrix()
-condition = c("control", "control", "control", "treated", "treated", "treated")
+# Old code for fixed 3-replicate studies
+# condition = c("control", "control", "control", "treated", "treated", "treated")
+# Generalized code for any number of replicates
+condition = c(rep("control", cols/2), rep("treated", cols/2))
 meta_data = data.frame(sample_names, condition)
 # Drop "1", "2", ... and just keep sample names and associated conditions
 meta_data <- meta_data %>% remove_rownames %>% 

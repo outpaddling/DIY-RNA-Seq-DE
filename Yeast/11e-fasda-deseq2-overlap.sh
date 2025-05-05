@@ -29,6 +29,6 @@ printf "Reported only by FASDA:           %s\n" $fasda_only
 deseq2_only=$(comm -13 fasda-sdegs.txt deseq-sdegs.txt | wc -l)
 printf "Reported only by DESeq2:          %s\n" $deseq2_only
 
-overlap=$((100 * $common / ($fasda_sde + $deseq2_sde) * 2))
-printf "\nOverlap = Common-SDE / ((FASDA-SDE + DESeq2-SDE)/2)\n"
+overlap=$((100 * $common / ($common + $fasda_only + $deseq2_only) ))
+printf "\nOverlap = Common-SDE / (Common + FASDA-only + DESeq2-only)\n"
 printf "Overlap:                          %s%%\n" $overlap

@@ -41,23 +41,15 @@ min_reps=$1
 max_reps=$2
 if [ $# = 3 ]; then
     if [ $3 = shifted ]; then
-	fetch=01-fetch-shifted.sh
+	arg3=shifted
     else
 	usage
     fi
-else
-    fetch=01-fetch.sh
 fi
 
 ./08-reference.sh
 ./09-kallisto-index.sh
 for reps in $(seq $min_reps $max_reps); do
-    rm -rf Results/05-trim Results/10-kallisto-quant
-    ./$fetch $reps
-    ./02-readable-names.sh $reps
-    ./05-trim.sh | cat
-    ./10-kallisto-quant.sh
-    ./11a-fasda-normalize-kallisto.sh
-    ./11b-fasda-fc-kallisto.sh | cat
+    ./reanalyze.sh $reps $arg3
     pause
 done

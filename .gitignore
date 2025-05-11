@@ -1,3 +1,8 @@
 Yeast/Results
 .*.bak
 *.bak
+counts.tsv
+filtered-features.txt
+kallisto-counts.tsv
+kallisto-deseq2-normalized-counts.tsv
+kallisto-deseq2-results.tsv

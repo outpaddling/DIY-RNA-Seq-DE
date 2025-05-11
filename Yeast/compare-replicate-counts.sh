@@ -54,7 +54,7 @@ fi
 for reps in $(seq $min_reps $max_reps); do
     rm -rf Results/05-trim Results/10-kallisto-quant
     ./$fetch $reps
-    ./02-readable-names.sh
+    ./02-readable-names.sh $reps
     ./05-trim.sh | cat
     ./10-kallisto-quant.sh
     ./11a-fasda-normalize-kallisto.sh

@@ -19,8 +19,15 @@ raw_renamed=Results/02-readable-names
 mkdir -p $raw_renamed
 rm -f $raw_renamed/*
 
-# There are 2 raw files for each replicate
-replicates=$(($(ls $raw | wc -l) / 2))
+# Allow creating links for a subset of the existing raw files, so we
+# can run with fewer samples than before, without removing and re-downloading
+# the raw files we don't use.
+if [ $# = 1 ]; then
+    replicates=$1
+else
+    # There are 2 raw files for each replicate
+    replicates=$(($(ls $raw | wc -l) / 2))
+fi
 
 # Link raw files to WT-rep or SNF-rep to indicate the biological condition
 # Link raw files to condX-repYY for easy and consistent scripting
@@ -38,17 +45,20 @@ for fq in $(ls Results/01-fetch/); do
     srr=${fq%.fastq.zst}
     # Use 2 digits for all replicates in filenames for "ls" sort order
     biorep=$(awk -v srr=$srr '$1 == srr { print $4 }' $map)
-    condition=$(awk -v srr=$srr '$1 == srr { print $3 }' $map)
-    if [ $condition = WT ]; then
-	cond_num=1
-    else
-	cond_num=2
+    # Allow more raw files than readable links
+    if [ $biorep -le $replicates ]; then
+	condition=$(awk -v srr=$srr '$1 == srr { print $3 }' $map)
+	if [ $condition = WT ]; then
+	    cond_num=1
+	else
+	    cond_num=2
+	fi
+	printf "Linking $srr = $condition-$biorep...\n"
+	biorep_padded=$(printf "%02d" $biorep)
+	# Use soft/symbolic links (ln -s) in case raw files are on a different
+	# disk/partition.  Hard links won't work in that case.
+	(cd $raw_renamed && ln -fs ../01-fetch/$fq $condition-$biorep_padded.fastq.zst)
     fi
-    printf "Linking $srr = $condition-$biorep...\n"
-    biorep_padded=$(printf "%02d" $biorep)
-    # Use soft/symbolic links (ln -s) in case raw files are on a different
-    # disk/partition.  Hard links won't work in that case.
-    (cd $raw_renamed && ln -fs ../01-fetch/$fq $condition-$biorep_padded.fastq.zst)
 done
 
 # Create sampleXX-condY-repZ links, WT first then SNF2

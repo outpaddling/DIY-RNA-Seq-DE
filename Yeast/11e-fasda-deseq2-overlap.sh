@@ -6,6 +6,7 @@ replicates=$(($samples / 2))
 output_dir=Results/11-fasda-kallisto
 fasda_de_file=$output_dir/fc-$replicates.txt
 
+printf "Replicates:                       %s\n" $replicates
 printf "Total features:                   %s\n" \
 	$(wc -l $fasda_de_file | awk '{ print $1 }')
 
@@ -18,7 +19,7 @@ deseq_de_file=kallisto-deseq2-results.tsv
 awk '$1 != "baseMean" && $6 < 0.05 { print $1 }' \
     $deseq_de_file | sort > deseq-sdegs.txt
 deseq2_sde=$(wc -l deseq-sdegs.txt | awk '{ print $1 }')
-printf "SDE features reported by DESeqs:  %s\n" $deseq2_sde
+printf "SDE features reported by DESeq2:  %s\n" $deseq2_sde
 
 common=$(comm -12 fasda-sdegs.txt deseq-sdegs.txt | wc -l)
 printf "\nCommon to FASDA and DESeq2:       %s\n" $common

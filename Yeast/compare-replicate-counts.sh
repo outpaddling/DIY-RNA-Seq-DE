@@ -47,8 +47,6 @@ if [ $# = 3 ]; then
     fi
 fi
 
-./08-reference.sh
-./09-kallisto-index.sh
 for reps in $(seq $min_reps $max_reps); do
     ./reanalyze.sh $reps $arg3
     pause

@@ -13,8 +13,6 @@
 #   2025-04-13  Jason Bacon Begin
 ##########################################################################
 
-library(tibble)
-
 ##########################################################################
 # Input file must be TSV and look like this:
 # target_id       s1      s2      s3      s4      s5      s6
@@ -27,11 +25,48 @@ library(tibble)
 # Last 3 are condition 2 (treated in DESeq2 design)
 ##########################################################################
 
-# FIXME: Convert kallisto outputs to counts.tsv
+##########################################################################
+#   Extract est_counts column from every kallisto abundance file and
+#   combine them into a single matrix.
+##########################################################################
 
+setwd("Results/10-kallisto-quant")
+# Getr list of subdirectories such as sample01-cond1-rep01-trimmed
+abundance_dirs = dir()
+for (dir in 1:length(abundance_dirs)){
+    file = paste(abundance_dirs[dir], "/abundance.tsv", sep="")
+    print(file)
+    data = read.table(file, header=TRUE, sep="\t")
+    # Extract counts column
+    counts_n = as.data.frame(data$est_counts)
+    colnames(counts_n)[1] = paste("s", dir, sep="")
+    
+    if ( dir == 1 )
+    {
+	# For first file, create data frame and add row names
+	raw_counts = counts_n
+	rownames(raw_counts) = data$target_id
+    }
+    else
+    {
+	# For the rest of the files, add the counts as another column
+	raw_counts = cbind(raw_counts, counts_n)
+    }
+    
+    # R allocates new memory every time a variable is assigned, even if
+    # it already exists, so free unused data frames immediately
+    rm(data)
+}
+print(head(raw_counts))
+setwd("../..")
+
+# Alternative: Use counts.tsv file created externally
 # row.names=1 removes "target_id" label from col 1, so it is not
 # counted as a data column.
-raw_counts = read.delim("kallisto-counts.tsv", row.names=1, header=TRUE)
+# raw_counts = read.delim("kallisto-counts.tsv", row.names=1, header=TRUE)
+# print(head(raw_counts))
+# quit()
+
 print("Raw counts:")
 head(raw_counts)
 cols = ncol(raw_counts)
@@ -43,7 +78,6 @@ print(paste("cols = ", cols))
 ##########################################################################
 
 print("Normalizing with DESeq2...")
-library(DESeq2)
 
 # DESeqDataSetFromMatrix() can only handle integers.  Seriously??
 # Kallisto and other quantifiers output real numbers.
@@ -58,7 +92,9 @@ sample_names = c(colnames(raw_counts))
 # Generalized code for any number of replicates
 condition = c(rep("control", cols/2), rep("treated", cols/2))
 meta_data = data.frame(sample_names, condition)
+
 # Drop "1", "2", ... and just keep sample names and associated conditions
+library(tibble)
 meta_data <- meta_data %>% remove_rownames %>% 
 	     column_to_rownames(var="sample_names")
 meta_data
@@ -67,8 +103,14 @@ meta_data
 all(colnames(raw_counts) %in% rownames(meta_data))
 all(colnames(raw_counts) == rownames(meta_data))
 
+# Reclaim memory used by library we're done with
+# This won't make much difference here, but it's a good habit to form
+# as other scripts may use a lot of memory
+unloadNamespace("tibble")
+
 # create a DESeqDataSet object.  See docs for possible designs.
 # Typical is a 2-condition experiment.
+library(DESeq2)
 dds = DESeqDataSetFromMatrix(countData = raw_counts, colData = meta_data,
 			     design = ~condition)
 dds

@@ -1,17 +1,23 @@
 #!/bin/sh -e
 
-# FIXME: This only currently works for 3 samples
-
-# FIXME: Move creation of kallisto-counts.tsv to kallisto-deseq2.R so that
-# this is more representative of a typical DESeq2 analysis.
+# This is just an example of how to generate a counts matrix in Bourne
+# shell.  kallisto-counts.tsv is not currently used by ./kallisto-deseq2.R,
+# which duplicates this code to create a data frame from the kallisto
+# abundance files.
 cut -f 1 Results/10-kallisto-quant/sample01*/abundance.tsv > kallisto-counts.tsv
-sample=1
-for file in Results/10-kallisto-quant/*/abundance.tsv; do
-    cut -f 4 $file | sed -e "s|est_counts|s$sample|" | paste kallisto-counts.tsv - > temp.tsv
+for path in Results/10-kallisto-quant/*/abundance.tsv; do
+    # Example dir name: sample01-cond1-rep01-trimmed
+    # Sample is characters 7 and 8
+    dir=$(echo $path | cut -d / -f 3)
+    sample=$(echo $dir | cut -c 7-8)
+    # Extract column 4 (counts) from one abundance.tsv file and
+    # add it to kallisto-counts.tsv
+    cut -f 4 $path | sed -e "s|est_counts|s$sample|" \
+	| paste kallisto-counts.tsv - > temp.tsv
     mv temp.tsv kallisto-counts.tsv
-    sample=$(($sample + 1))
 done
 head kallisto-counts.tsv
+
 ./kallisto-deseq2.R
 
 de_file=kallisto-deseq2-results.tsv

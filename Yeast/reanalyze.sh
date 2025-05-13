@@ -2,7 +2,7 @@
 
 usage()
 {
-    printf "Usage: $0 replicates\n"
+    printf "Usage: $0 replicates [shifted]\n"
     exit 1
 }
 

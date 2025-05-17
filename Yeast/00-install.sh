@@ -33,9 +33,12 @@ pause()
 
 dreckly_install()
 {
-    curl -O https://raw.githubusercontent.com/outpaddling/auto-admin/refs/heads/master/User-scripts/auto-dreckly-setup
-    chmod 755 auto-dreckly-setup
-    cat << EOM
+    if auto-dreckly-dir; then
+        cd $(auto-dreckly-dir)/biology/rna-seq && bmake install
+    else
+        curl -O https://raw.githubusercontent.com/outpaddling/auto-admin/refs/heads/master/User-scripts/auto-dreckly-setup
+        chmod 755 auto-dreckly-setup
+        cat << EOM
 
 Running auto-dreckly-setup.  After the dreckly setup completes, you will
 be presented a menu for software installation.  Choose
@@ -47,8 +50,9 @@ and then enter
     biology/rna-seq
     
 EOM
-    pause
-    ./auto-dreckly-setup
+        pause
+        ./auto-dreckly-setup
+    fi
     return 0
 }
 

@@ -27,8 +27,8 @@ head -n 5 $norm_file2
 outfile=fc-3.txt
 # export PATH=~/Prog/Src/local/bin:$PATH
 printf "\nComputing fold-change for $replicates replicates...\n"
-echo "time fasda fold-change --output $outfile cond1-norm-$replicates.tsv cond2-norm-$replicates.tsv"
-time fasda fold-change --output $outfile cond1-norm.tsv cond2-norm.tsv
+echo "fasda fold-change --output $outfile cond1-norm-$replicates.tsv cond2-norm-$replicates.tsv"
+fasda fold-change --output $outfile cond1-norm.tsv cond2-norm.tsv
 
 more $outfile
 printf "\n%-25s %10s %10s\n" "File" "Features" "P < 0.05"

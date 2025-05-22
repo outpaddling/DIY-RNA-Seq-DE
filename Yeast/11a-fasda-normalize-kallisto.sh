@@ -21,7 +21,7 @@ files=$(ls ../../$input_dir/sample*-*/abundance.tsv)
 norm_all=all-norm.tsv
 echo "fasda normalize --output $norm_all $files"
 set -x
-time fasda normalize --output $norm_all $files
+fasda normalize --output $norm_all $files
 set +x
 printf "\nAll samples normalized counts:\n\n"
 head -n 5 $norm_all

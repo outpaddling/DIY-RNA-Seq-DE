@@ -36,8 +36,8 @@ head -n 5 $norm_file2
 
 de_file=fc-$replicates.txt
 printf "\nComputing fold-change for $replicates replicates...\n"
-echo "time fasda fold-change --output $de_file cond1-norm-$replicates.tsv cond2-norm-$replicates.tsv"
-time fasda fold-change \
+echo "fasda fold-change --output $de_file cond1-norm-$replicates.tsv cond2-norm-$replicates.tsv"
+fasda fold-change \
      --output $de_file \
     cond1-norm-$replicates.tsv cond2-norm-$replicates.tsv
 

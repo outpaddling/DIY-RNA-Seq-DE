@@ -31,6 +31,6 @@ trimmed=$output_dir/${base%.fastq.zst}-trimmed.fastq.zst
 # when multiple instances of this script are run in parallel
 stdout=${trimmed%.fastq.zst}.stdout
 stderr=${trimmed%.fastq.zst}.stderr
-time fastq-trim --3p-adapter1 AGATCGGAAGAG --polya-min-length 3 \
+fastq-trim --3p-adapter1 AGATCGGAAGAG --polya-min-length 3 \
     --min-match 3 --max-mismatch-percent 10 --min-qual 20 --min-length 30 \
     $raw $trimmed > $stdout 2> $stderr

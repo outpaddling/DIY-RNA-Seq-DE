@@ -6,3 +6,6 @@ filtered-features.txt
 kallisto-counts.tsv
 kallisto-deseq2-normalized-counts.tsv
 kallisto-deseq2-results.tsv
+hisat2-counts.tsv
+hisat2-deseq2-normalized-counts.tsv
+hisat2-deseq2-results.tsv

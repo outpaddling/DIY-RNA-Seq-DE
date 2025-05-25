@@ -9,3 +9,10 @@ analysis for non-programmers
 All of the software required for this analysis can be installed by running
 00-install.sh in the Yeast directory.  Detailed instructions for software
 installation are in the book.
+
+## Compatibility
+
+This analysis has been extensively tested on Alma Linux 8, Debian Linux 12,
+FreeBSD 14, GhostBSD 14, macOS 12 x86, macOS 15 ARM-M1, NetBSD 10,
+and Xubuntu Linux 24.  Problems on any other POSIX platform are unlikely.
+If they do occur, please open an issue here.
